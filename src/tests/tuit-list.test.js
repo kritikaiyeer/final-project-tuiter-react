@@ -6,15 +6,7 @@ import {findAllTuits,createTuit} from "../services/tuits-service";
 import {createUser} from "../services/users-service";
 import axios from "axios";
 
-
-const MOCKED_USERS = [
-  "alice", "bob", "charlie"
-];
-
-const MOCKED_TUITS = [
-  "alice's tuit", "bob's tuit", "charlie's tuit"
-];
-
+// created mock tuits
 const NEW_MOCKED_TUITS = [
     {_id:1, tuit:"alice tuit", postedBy : {username:"alice", password:"alice123", email: "a@g.com"}},
     {_id:2, tuit:"bob tuit", postedBy : {username:"bob", password:"bob123", email: "b@g.com"}},
@@ -30,51 +22,63 @@ test('tuit list renders static tuit array', () => {
         </HashRouter>
     );
 
+    // looking up the tuit content of all three inserted tuits in the document
+    // and verifying that it is present
+    const linkElement1 = screen.getByText("alice tuit");
+    const linkElement2 = screen.getByText("bob tuit");
+    const linkElement3 = screen.getByText("charlie tuit");
 
-  const linkElement1 = screen.getByText("alice tuit");
-  const linkElement2 = screen.getByText("bob tuit");
-  const linkElement3 = screen.getByText("charlie tuit");
-
-  expect(linkElement1).toBeInTheDocument();
-  expect(linkElement1).toBeInTheDocument();
-  expect(linkElement1).toBeInTheDocument();
+    expect(linkElement1).toBeInTheDocument();
+    expect(linkElement1).toBeInTheDocument();
+    expect(linkElement1).toBeInTheDocument();
 
 });
 
 test('tuit list renders async', async () => {
-  const allTuits = await findAllTuits();
-  render(
-          <HashRouter>
-                <Tuits tuits={allTuits}/>
-          </HashRouter>
-      );
 
+    // The test passes if there is a tuit with the content "My name is Alice. This is my first tuit!"
+    // in the database.
 
+    // using the service of finding all tuits
+    const allTuits = await findAllTuits();
+
+    // passing those tuits to render
+    render(
+        <HashRouter>
+            <Tuits tuits={allTuits}/>
+        </HashRouter>
+    );
+
+    // checking if the tuit content is rendered properly
     const linkElement1 = screen.getByText("My name is Alice. This is my first tuit!");
     expect(linkElement1).toBeInTheDocument();
 
 })
 
 test('tuit list renders mocked', async () => {
-   const mock = jest.spyOn(axios, 'get');
-     mock.mockImplementation(() =>
-       Promise.resolve({ data: {tuits: NEW_MOCKED_TUITS} }));
-     const response = await findAllTuits();
-     const tuits = response.tuits;
 
-     render(
-       <HashRouter>
-         <Tuits tuits={tuits}/>
-       </HashRouter>
-     );
+    // mocking the service findAllTuits
+    const mock = jest.spyOn(axios, 'get');
+        mock.mockImplementation(() =>
+            Promise.resolve({ data: {tuits: NEW_MOCKED_TUITS} }));
+    const response = await findAllTuits();
+    const tuits = response.tuits;
 
-     const linkElement1 = screen.getByText("alice tuit");
-     const linkElement2 = screen.getByText("bob tuit");
-     const linkElement3 = screen.getByText("charlie tuit");
+    // rendering the mocked tuits
+    render(
+        <HashRouter>
+            <Tuits tuits={tuits}/>
+        </HashRouter>
+    );
 
-     expect(linkElement1).toBeInTheDocument();
-     expect(linkElement1).toBeInTheDocument();
-     expect(linkElement1).toBeInTheDocument();
+    // checking tuit content
+    const linkElement1 = screen.getByText("alice tuit");
+    const linkElement2 = screen.getByText("bob tuit");
+    const linkElement3 = screen.getByText("charlie tuit");
 
-     mock.mockRestore();
+    expect(linkElement1).toBeInTheDocument();
+    expect(linkElement1).toBeInTheDocument();
+    expect(linkElement1).toBeInTheDocument();
+
+    mock.mockRestore();
 });

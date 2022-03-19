@@ -5,41 +5,57 @@ global.TextDecoder = require("util").TextDecoder;
 var mongoose = require('mongoose');
 
 describe('can create tuit with REST API', () => {
-  const alice = {
-    userName : "alice",
-    password : "alice123",
-    email : "alice@gmail.com"
-  }
 
-  const aliceTuit = {
-      tuit : "I am alice. This is my tuit"
+    // creating a dummy user object
+    const alice = {
+        userName : "alice",
+        password : "alice123",
+        email : "alice@gmail.com"
     }
 
-  var tuitId = null;
-  beforeAll(async () => {
-    return await deleteUsersByUsername(alice.userName);
-  })
+    // creating a dummy tuit object
+    const aliceTuit = {
+        tuit : "I am alice. This is my tuit"
+    }
 
-  afterAll(async () => {
+    // declaring a variable to store the tuit that I will be inserting later, so that I can delete it
+    // after the test
+    var tuitId = null;
+
+    beforeAll(async () => {
+        return await deleteUsersByUsername(alice.userName);
+    })
+
+    afterAll(async () => {
         await deleteUsersByUsername(alice.userName);
         await deleteTuit(tuitId);
-  })
+    })
 
-  test('can create tuit with REST API', async () => {
-    const newUser = await createUser(alice);
+    test('can create tuit with REST API', async () => {
 
-    expect(newUser.userName).toEqual(alice.userName);
-    expect(newUser.password).toEqual(alice.password);
-    expect(newUser.email).toEqual(alice.email);
+        // creating new user
+        const newUser = await createUser(alice);
 
-    const newUserId = newUser._id;
-    const newTuit = await createTuit(newUserId, aliceTuit);
-    tuitId = newTuit._id;
-    expect(newTuit.tuit).toEqual(aliceTuit.tuit);
+        // checking if the user in inserted properly
+        expect(newUser.userName).toEqual(alice.userName);
+        expect(newUser.password).toEqual(alice.password);
+        expect(newUser.email).toEqual(alice.email);
 
+        // extracting the newly created user's id as it is need to create a tuit by that user
+        const newUserId = newUser._id;
 
-  });
+        // creating a tuit by that user
+        const newTuit = await createTuit(newUserId, aliceTuit);
 
+        // storing the tuit id in a variable declared above so that I can delete it after test
+        tuitId = newTuit._id;
+
+        // checking that new tuit content matches the one that we inserted
+        expect(newTuit.tuit).toEqual(aliceTuit.tuit);
+        // checking that new tuit's postedBy field has the same id as that of the user I inserted
+        expect(newTuit.postedBy).toEqual(newUserId);
+
+    });
 
 });
 
@@ -55,13 +71,15 @@ describe('can delete tuit with REST API', () => {
         tuit : "I am ABC. This is my tuit"
     }
 
+    // variable for storing the newly crested tuit's id so I can delete it after test
     var tuitId = null;
 
     beforeAll(async () => {
-        return await deleteUsersByUsername(abcUser.userName);
-
+        await deleteUsersByUsername(abcUser.userName);
     })
+
     afterAll(async () => {
+
         await deleteUsersByUsername(abcUser.userName);
         await deleteTuit(tuitId);
     })
@@ -98,14 +116,13 @@ describe('can retrieve a tuit by their primary key with REST API', () => {
 
     var newTuitId = null;
 
-    beforeAll(() => {
-        // clean up before the test making sure the user doesn't already exist
-        return deleteUsersByUsername(abcUser.userName)
+    beforeAll(async () => {
+        await deleteUsersByUsername(abcUser.userName)
     });
 
-      // clean up after ourselves
+
     afterAll( async () => {
-        // remove any data we inserted
+
         await deleteUsersByUsername(abcUser.userName);
         await deleteTuit(newTuitId);
 
@@ -113,37 +130,43 @@ describe('can retrieve a tuit by their primary key with REST API', () => {
 
     test('can retrieve a tuit by their primary key with REST API', async () => {
 
-        // create new user and check it
+        // create new user and check if it is properly inserted
         const newUser = await createUser(abcUser);
         expect(newUser.userName).toEqual(abcUser.userName);
         expect(newUser.password).toEqual(abcUser.password);
         expect(newUser.email).toEqual(abcUser.email);
 
-        // create the new user's tuit and check it
+        // create the new user's tuit and check if it is the one we inserted
         const newTuit = await createTuit(newUser._id, abcTuit);
-        expect(newTuit.tuit).toEqual(abcTuit.tuit);
+        expect(newTuit.tuit).toEqual(abcTuit.tuit);  // checking tuit content
+        expect(newTuit.postedBy).toEqual(newUser._id);  // checking postedBy field
         newTuitId = newTuit._id;
 
         // retrieve the created tuit and check if it is the one that was created
         const existingTuit = await findTuitById(newTuit._id);
-        expect(existingTuit._id).toEqual(newTuit._id);
-        expect(existingTuit.tuit).toEqual(newTuit.tuit);
+        expect(existingTuit._id).toEqual(newTuit._id);  // comparing IDs
+        expect(existingTuit.tuit).toEqual(newTuit.tuit);  // comparing tuit content
 
     })
 });
 
 describe('can retrieve all tuits with REST API', () => {
 
+    // mocking mongoose object IDs as user IDs so that dummy users can be inserted
     const id1 = new mongoose.Types.ObjectId();
     const id2 = new mongoose.Types.ObjectId();
     const id3 = new mongoose.Types.ObjectId();
+
+    // maintaining a list of all the user IDs. Useful to delete users after running the test.
     const userIds = [];
     userIds.push(id1);
     userIds.push(id2);
     userIds.push(id3);
+
+    // creating dummy user objects
     const users = [
         {
-            _id : id1,
+            _id : id1,  // mocked ID
             userName : "larry",
             password : "larry123",
             email : "larry@gmail.com"
@@ -162,6 +185,7 @@ describe('can retrieve all tuits with REST API', () => {
         }
     ]
 
+    // creating dummy tuit objects
     const tuits = [
         {
             tuit : "larry's tuit",
@@ -174,10 +198,12 @@ describe('can retrieve all tuits with REST API', () => {
         }
     ]
 
-
-
+    // declaring a variable that later maintains a list of all the tuit IDs.
+    // Useful to delete tuits after running the test.
     const tuitIds = [];
 
+    // creating an array for the purpose of checking that the tuit and the user that posted it
+    // is in sync
     const tuit_postedBy_map = [
         {
             tuit : "larry's tuit",
@@ -193,26 +219,33 @@ describe('can retrieve all tuits with REST API', () => {
         },
 
     ]
-    beforeAll(async () =>{
 
+
+    beforeAll(async () =>{
+        // inserting dummy users
         Promise.all(
             users.map(user => createUser(user))
         )
 
+        // inserting dummy tuits
         const t1 = await createTuit(id1,tuits[0]);
         const t2 = await createTuit(id2,tuits[1]);
         const t3 = await createTuit(id3,tuits[2]);
 
+        // maintaining list of the inserted tuits' IDs
         tuitIds.push(t1._id);
         tuitIds.push(t2._id);
         tuitIds.push(t3._id);
     });
 
     afterAll(async () => {
+
+        // deleting inserted users
         await deleteUser(userIds[0]);
         await deleteUser(userIds[1]);
         await deleteUser(userIds[2]);
 
+        // deleting inserted tuits
         await deleteTuit(tuitIds[0]);
         await deleteTuit(tuitIds[1]);
         await deleteTuit(tuitIds[2]);
@@ -222,19 +255,27 @@ describe('can retrieve all tuits with REST API', () => {
 
     test('can retrieve all tuits with REST API',async () => {
 
+        // using findAllTuits service
         const allTuits = await findAllTuits();
 
+        // maintaining a list of 'tuit' field's values so that I can filter the tuits I have inserted
+        // from all the tuits I receive by calling findAllTuits()
         const tuitNames = [];
         tuits.forEach(tuit => tuitNames.push(tuit.tuit));
 
         const allTuitsIInserted = allTuits.filter(tuit => tuitNames.indexOf(tuit.tuit) >= 0);
+
+        // checking if "atleast" same of of tuits are retrieved. There can be more if there already exists
+        // tuits with same content
         expect(allTuits.length).toBeGreaterThanOrEqual(allTuitsIInserted.length);
 
-        var i = 0;
+
         allTuitsIInserted.forEach(tuit => {
-            const tuitObj = tuit_postedBy_map.find(t => t.tuit === tuit.tuit); // finding a tuit from 'tuits' that matches the tuit I inserted
-            expect(tuit.tuit).toEqual(tuitObj.tuit);
-            expect(tuit.postedBy.userName).toEqual(tuitObj.postedBy);
+            // finding an object from 'tuit_postedBy_map' that matches
+            // the tuit I had inserted and retrieved now
+            const tuitObj = tuit_postedBy_map.find(t => t.tuit === tuit.tuit);
+            expect(tuit.tuit).toEqual(tuitObj.tuit);    // checking tuit content
+            expect(tuit.postedBy.userName).toEqual(tuitObj.postedBy);  // checking username
 
         });
 
