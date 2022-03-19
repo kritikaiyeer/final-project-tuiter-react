@@ -33,7 +33,7 @@ const Home = () => {
   return(
     <div className="ttr-home">
       <div className="border border-bottom-0">
-        <h4 className="fw-bold p-2">Home Screen</h4>
+        <h4 className="fw-bold p-2">Home Screen </h4>
         {
           uid &&
           <div className="d-flex">

@@ -11,7 +11,7 @@ export const UserList = ({users, deleteUser}) => {
                   key={user._id}
                   to={`/home/${user._id}`}>
           <span className="fs-3">
-            {user.username}
+            {user.userName}
           </span>
               <button onClick={(e) => {
                 e.stopPropagation()
