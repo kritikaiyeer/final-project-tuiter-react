@@ -1,8 +1,24 @@
 import React from "react";
 import Tuits from "../tuits";
 import {Link} from "react-router-dom";
+import * as service from "../../services/auth-service"
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [profile, setProfile] = useState({});
+  useEffect(async () => {
+    try {
+      const user = await service.profile();
+      setProfile(user);
+    } catch (e) {
+      navigate('/login');
+    }
+  }, []);
+  const logout = () => {
+    service.logout()
+        .then(() => navigate('/login'));
+  }
   return(
     <div className="ttr-profile">
       <div className="border border-bottom-0">
@@ -20,6 +36,9 @@ const Profile = () => {
                 className="mt-2 me-2 btn btn-large btn-light border border-secondary fw-bolder rounded-pill fa-pull-right">
             Edit profile
           </Link>
+          <button onClick={logout} className="mt-2 float-end btn btn-warning rounded-pill">
+            Logout
+          </button>
         </div>
 
         <div className="p-2">
