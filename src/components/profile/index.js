@@ -1,7 +1,8 @@
 import React from "react";
 import Tuits from "../tuits";
 import {Link} from "react-router-dom";
-import * as service from "../../services/auth-service"
+import * as service from "../../services/auth-service";
+import MyTuits from "./my-tuits";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -64,8 +65,8 @@ const Profile = () => {
           <b className="ms-4">51.1M</b> Followers
           <ul className="mt-4 nav nav-pills nav-fill">
             <li className="nav-item">
-              <Link to="/profile/tuits"
-                    className="nav-link active">
+              <Link to="/profile/mytuits"
+                    className={`nav-link ${location.pathname.indexOf('mytuits') >= 0 ? 'active':''}`}>
                 Tuits</Link>
             </li>
             <li className="nav-item">
@@ -86,7 +87,9 @@ const Profile = () => {
           </ul>
         </div>
       </div>
-      <Tuits/>
+      <Routes>
+        <Route path="/mytuits" element={<MyTuits/>}/>
+      </Routes>
     </div>
   );
 }
