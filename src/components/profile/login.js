@@ -15,7 +15,7 @@ export const Login = () => {
             <h1>Login</h1>
             <input className="mb-2 form-control"
                    onChange={(e) =>
-                       setLoginUser({...loginUser, username: e.target.value})}
+                       setLoginUser({...loginUser, userName: e.target.value})}
                    placeholder="username"/>
             <input className="mb-2 form-control"
                    onChange={(e) =>

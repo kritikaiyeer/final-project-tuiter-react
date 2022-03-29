@@ -14,7 +14,7 @@ const Signup = () => {
             <h1>Signup</h1>
             <input className="mb-2 form-control"
                    onChange={(e) =>
-                       setNewUser({...newUser, username: e.target.value})}
+                       setNewUser({...newUser, userName: e.target.value})}
                    placeholder="username"/>
             <input className="mb-2 form-control"
                    onChange={(e) =>
