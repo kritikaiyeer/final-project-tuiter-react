@@ -2,7 +2,7 @@ import React from "react";
 import Navigation from "../navigation";
 import WhatsHappening from "../whats-happening";
 import {BrowserRouter, Routes, Route, HashRouter} from "react-router-dom";
-import Home from "../home";
+import Home from "../home/index";
 import Bookmarks from "../bookmarks";
 import Profile from "../profile";
 import './tuiter.css'
