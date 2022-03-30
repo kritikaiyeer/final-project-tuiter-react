@@ -7,6 +7,10 @@ import Bookmarks from "../bookmarks";
 import Profile from "../profile";
 import './tuiter.css'
 import EditProfile from "../profile/edit-profile";
+import MyTuits from "../profile/my-tuits";
+import TuitsAndReplies from "../profile/tuits-and-replies";
+import Media from "../profile/media";
+import MyLikes from "../profile/my-likes";
 import Explore from "../explore";
 import Notifications from "../notifications";
 import Messages from "../messages";
@@ -40,7 +44,10 @@ function Tuiter () {
               <Route path="/profile" element={<Profile/>}/>
               <Route path="/profile/edit" element={<EditProfile/>}/>
               <Route path="/more" element={<More/>}/>
-
+              <Route path="/mytuits" element={<MyTuits/>}/>
+              <Route path="/tuits-and-replies" element={<TuitsAndReplies/>}/>
+              <Route path="/media" element={<Media/>}/>
+              <Route path="/likes" element={<MyLikes/>}/>
             </Routes>
           </div>
           <div className="ttr-right-column">
