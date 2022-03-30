@@ -19,7 +19,7 @@ const Home = () => {
     return () => {isMounted = false;}
   }, []);
   const createTuit = () =>
-      service.createTuit(userId, {tuit})
+      service.createTuit('my', {tuit})
           .then(findTuits)
   return(
     <div className="ttr-home">
