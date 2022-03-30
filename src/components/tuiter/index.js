@@ -13,9 +13,11 @@ import Messages from "../messages";
 import Lists from "../lists";
 import More from "../more";
 import Signup from "../profile/signup";
-
 import {Login} from "../profile/login";
-
+import MyTuits from "./my-tuits";
+import TuitsAndReplies from "./tuits-and-replies";
+import Media from "./media";
+import MyLikes from "./my-likes";
 function Tuiter () {
   return(
     <HashRouter>
