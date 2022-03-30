@@ -1,7 +1,7 @@
 import axios from "axios";
 const BASE_URL = "https://fse-node-app-a4.herokuapp.com";
 
-const SECURITY_API = `${BASE_URL}/api/auth`
+const SECURITY_API = `${BASE_URL}/api/auth`;
 
 const api = axios.create({
    withCredentials: true
