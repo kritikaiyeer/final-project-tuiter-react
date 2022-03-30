@@ -14,10 +14,10 @@ import Lists from "../lists";
 import More from "../more";
 import Signup from "../profile/signup";
 import {Login} from "../profile/login";
-import MyTuits from "./my-tuits";
-import TuitsAndReplies from "./tuits-and-replies";
-import Media from "./media";
-import MyLikes from "./my-likes";
+import MyTuits from "../profile/my-tuits";
+import TuitsAndReplies from "../profile/tuits-and-replies";
+import Media from "../profile/media";
+import MyLikes from "../profile/my-likes";
 function Tuiter () {
   return(
     <HashRouter>
