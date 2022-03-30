@@ -14,10 +14,7 @@ import Lists from "../lists";
 import More from "../more";
 import Signup from "../profile/signup";
 import {Login} from "../profile/login";
-import MyTuits from "../profile/my-tuits";
-import TuitsAndReplies from "../profile/tuits-and-replies";
-import Media from "../profile/media";
-import MyLikes from "../profile/my-likes";
+
 function Tuiter () {
   return(
     <HashRouter>
@@ -43,10 +40,7 @@ function Tuiter () {
               <Route path="/profile" element={<Profile/>}/>
               <Route path="/profile/edit" element={<EditProfile/>}/>
               <Route path="/more" element={<More/>}/>
-              <Route path="/profile/mytuits" element={<MyTuits/>}/>
-              <Route path="/profile/tuits-and-replies" element={<TuitsAndReplies/>}/>
-              <Route path="/profile/media" element={<Media/>}/>
-              <Route path="/profile/likes" element={<MyLikes/>}/>
+
             </Routes>
           </div>
           <div className="ttr-right-column">
