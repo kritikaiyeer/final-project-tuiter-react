@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react";
 import Tuits from "../tuits";
 import {HashRouter, Link, Route, Routes, useNavigate, useLocation} from "react-router-dom";
 import * as service from "../../services/auth-service";
-import MyTuits from "../my-tuits";
-import TuitsAndReplies from "../tuits-and-replies";
-import Media from "../media";
-import MyLikes from "../my-likes";
+import MyTuits from "./my-tuits";
+import TuitsAndReplies from "./tuits-and-replies";
+import Media from "./media";
+import MyLikes from "./my-likes";
 
 const Profile = () => {
   const navigate = useNavigate();
