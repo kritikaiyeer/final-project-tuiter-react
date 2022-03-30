@@ -41,7 +41,7 @@ function Tuiter () {
               <Route path="/profile" element={<Profile/>}/>
               <Route path="/profile/edit" element={<EditProfile/>}/>
               <Route path="/more" element={<More/>}/>
-              <Route path="/mytuits" element={<MyTuits/>}/>
+              <Route path="/profile/mytuits" element={<MyTuits/>}/>
               <Route path="/profile/tuits-and-replies" element={<TuitsAndReplies/>}/>
               <Route path="/profile/media" element={<Media/>}/>
               <Route path="/profile/likes" element={<MyLikes/>}/>
