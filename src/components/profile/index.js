@@ -65,22 +65,22 @@ const Profile = () => {
           <ul className="mt-4 nav nav-pills nav-fill">
             <li className="nav-item">
               <Link to="/profile/mytuits"
-                    className={`nav-link ${location.pathname.indexOf('mytuits') >= 0 ? 'active':''}`}>
+                    className="nav-link active">
                 Tuits</Link>
             </li>
             <li className="nav-item">
               <Link to="/profile/tuits-and-replies"
-                    className={`nav-link ${location.pathname.indexOf('tuits-and-replies') >= 0 ? 'active':''}`}>
+                    className="nav-link">
                 Tuits & replies</Link>
             </li>
             <li className="nav-item">
               <Link to="/profile/media"
-                    className={`nav-link ${location.pathname.indexOf('media') >= 0 ? 'active':''}`}>
+                    className="nav-link">
                 Media</Link>
             </li>
             <li className="nav-item">
               <Link to="/profile/likes"
-                    className={`nav-link ${location.pathname.indexOf('likes') >= 0 ? 'active':''}`}>
+                    className="nav-link">
                 Likes</Link>
             </li>
           </ul>
