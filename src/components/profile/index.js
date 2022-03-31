@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
-import Tuits from "../tuits";
-import {HashRouter, Link, Route, Routes, useNavigate, useLocation} from "react-router-dom";
-import * as service from "../../services/auth-service";
 import MyTuits from "./my-tuits";
+import {HashRouter, Link, Route, Routes, useNavigate, useLocation} from "react-router-dom";
+import * as service from "../../services/security-service"
 import TuitsAndReplies from "./tuits-and-replies";
 import Media from "./media";
 import MyLikes from "./my-likes";
-
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,7 +24,9 @@ const Profile = () => {
   return(
     <div className="ttr-profile">
       <div className="border border-bottom-0">
-        <h4 className="p-2 mb-0 pb-0 fw-bolder">{profile.userName}<i className="fa fa-badge-check text-primary"></i></h4>
+        <h4 className="p-2 mb-0 pb-0 fw-bolder">
+          {profile.userName}
+          <i className="fa fa-badge-check text-primary"></i></h4>
         <span className="ps-2">67.6K Tuits</span>
         <div className="mb-5 position-relative">
           <img className="w-100" src="../images/nasa-profile-header.jpg"/>
@@ -74,28 +74,28 @@ const Profile = () => {
             </li>
             <li className="nav-item">
               <Link to="/profile/tuits-and-replies"
-                    className="nav-link">
+                    className={`nav-link ${location.pathname.indexOf('tuits-and-replies') >= 0 ? 'active':''}`}>
                 Tuits & replies</Link>
             </li>
             <li className="nav-item">
               <Link to="/profile/media"
-                    className="nav-link">
+                    className={`nav-link ${location.pathname.indexOf('media') >= 0 ? 'active':''}`}>
                 Media</Link>
             </li>
             <li className="nav-item">
               <Link to="/profile/likes"
-                    className="nav-link">
+                    className={`nav-link ${location.pathname.indexOf('likes') >= 0 ? 'active':''}`}>
                 Likes</Link>
             </li>
           </ul>
         </div>
       </div>
-          <Routes>
-            <Route path="/mytuits" element={<MyTuits/>}/>
-            <Route path="/tuits-and-replies" element={<TuitsAndReplies/>}/>
-            <Route path="/media" element={<Media/>}/>
-            <Route path="/likes" element={<MyLikes/>}/>
-          </Routes>
+        <Routes>
+          <Route path="/mytuits" element={<MyTuits/>}/>
+          <Route path="/tuits-and-replies" element={<TuitsAndReplies/>}/>
+          <Route path="/media" element={<Media/>}/>
+          <Route path="/likes" element={<MyLikes/>}/>
+        </Routes>
     </div>
   );
 }
