@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import MyTuits from "./my-tuits";
 import {HashRouter, Link, Route, Routes, useNavigate, useLocation} from "react-router-dom";
-import * as service from "../../services/security-service"
+import * as service from "../../services/auth-service"
 import TuitsAndReplies from "./tuits-and-replies";
 import Media from "./media";
 import MyLikes from "./my-likes";
