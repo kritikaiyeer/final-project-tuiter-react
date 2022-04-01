@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const USERS_API = `${BASE_URL}/api/users`;
-const TUITS_API = `${BASE_URL}/api/tuits`;
+const BASE_URL = "https://fse-node-app-a4.herokuapp.com";
+const USERS_API = `${BASE_URL}/users`;
+const TUITS_API = `${BASE_URL}/tuits`;
 
 const api = axios.create({
   withCredentials: true
