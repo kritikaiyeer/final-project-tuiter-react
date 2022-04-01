@@ -14,7 +14,7 @@ const TuitStats = ({tuit, likeTuit}) => {
         <div className="col">
           <span className="ttr-like-tuit-click" onClick={() => likeTuit(tuit)}>
                {
-                 tuit.stats && tuit.stats.likes && tuit.stats.likes > 0 &&
+                 tuit.stats.likes > 0 &&
                    <i className="fas fa-heart me-1" style={{color: 'red'}}></i>
                }
                {
