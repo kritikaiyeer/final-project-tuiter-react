@@ -1,11 +1,10 @@
-
 import React from "react";
 import TuitStats from "./tuit-stats";
 import TuitImage from "./tuit-image";
 import TuitVideo from "./tuit-video";
 import {useNavigate, Link} from "react-router-dom";
 
-const Tuit = ({tuit, deleteTuit}) => {
+const Tuit = ({tuit, deleteTuit, likeTuit}) => {
     const navigate = useNavigate();
     const daysOld = (tuit) => {
         const now = new Date();
@@ -58,7 +57,7 @@ const Tuit = ({tuit, deleteTuit}) => {
           tuit.image &&
           <TuitImage tuit={tuit}/>
         }
-        <TuitStats tuit={tuit}/>
+        <TuitStats tuit={tuit} likeTuit={likeTuit}/>
       </div>
     </li>
   );
