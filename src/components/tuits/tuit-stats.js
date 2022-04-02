@@ -34,7 +34,7 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
                      <i class="fa-light fa-thumbs-up"></i>
                }
             <span className="ttr-stats-likes">{tuit.stats && tuit.stats.likes}</span>
-            <span className="ttr-stats-likes">{loggedInUserLikes(tuit)}</span>
+
           </span>
         </div>
         <div className="col">
@@ -43,9 +43,9 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
                     tuit.stats.dislikes > 0 &&
                        <i class="fa-solid fa-thumbs-down"></i>
                }
-                  {
-                     tuit.stats.dislikes <= 0 &&
-                        <i class="fa-light fa-thumbs-down"></i>
+               {
+                    tuit.stats.dislikes <= 0 &&
+                       <i class="fa-light fa-thumbs-down"></i>
                }
             <span className="ttr-stats-likes">{tuit.stats && tuit.stats.dislikes}</span>
           </span>
