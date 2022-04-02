@@ -3,11 +3,11 @@ import * as likesService from "../../services/likes-service";
 
 const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
 
-    const userLikes = (tuit) =>
+    const loggedInUserLikes = (tuit) =>
         likesService.findUserLikesTuit("me", tuit._id)
             .catch(e => alert(e))
 
-    const userDislikes = (tuit) =>
+    const loggedInUserDislikes = (tuit) =>
         likesService.findUserDislikesTuit("me", tuit._id)
             .catch(e => alert(e))
 
@@ -24,7 +24,7 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
         <div className="col">
           <span className="ttr-like-tuit-click" onClick={() => likeTuit(tuit)}>
                {
-                 userLikes(tuit) ?
+                 loggedInUserLikes(tuit) ?
                    <i class="fa-solid fa-thumbs-up"></i> : <i class="fa-light fa-thumbs-up"></i>
                }
 
@@ -34,7 +34,7 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
         <div className="col">
           <span className="ttr-like-tuit-click" onClick={() => dislikeTuit(tuit)}>
                {
-                    userDislikes(tuit) ?
+                    loggedInUserDislikes(tuit) ?
                       <i class="fa-solid fa-thumbs-down"></i> : <i class="fa-light fa-thumbs-down"></i>
                }
             <span className="ttr-stats-likes">{tuit.stats && tuit.stats.dislikes}</span>
