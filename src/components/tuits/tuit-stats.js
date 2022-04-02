@@ -32,6 +32,7 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
                }
 
             <span className="ttr-stats-likes">{tuit.stats && tuit.stats.likes}</span>
+            <span className="ttr-stats-likes">{loggedInUserLikes(tuit)}</span>
           </span>
         </div>
         <div className="col">
