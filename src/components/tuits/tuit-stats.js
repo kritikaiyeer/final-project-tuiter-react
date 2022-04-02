@@ -5,10 +5,12 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
 
     const loggedInUserLikes = (tuit) =>
         likesService.findUserLikesTuit("me", tuit._id)
+            .then(response => response.data)
             .catch(e => alert(e))
 
     const loggedInUserDislikes = (tuit) =>
         likesService.findUserDislikesTuit("me", tuit._id)
+            .then(response => response.data)
             .catch(e => alert(e))
 
     return (
