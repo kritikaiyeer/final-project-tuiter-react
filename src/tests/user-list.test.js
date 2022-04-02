@@ -21,14 +21,14 @@ test('user list renders static user array', () => {
 });
 
 test('user list renders async', async () => {
+
     const users = await findAllUsers();
     render(
         <HashRouter>
             <UserList users={users}/>
         </HashRouter>);
 
-    // The test passes if there is a user with username 'alice123' already in the database.
-    const linkElement = screen.getByText(/alice123/i);
+    const linkElement = screen.getByText(/bob/i);
     expect(linkElement).toBeInTheDocument();
 })
 

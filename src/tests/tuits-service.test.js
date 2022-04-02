@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import {createTuit, deleteTuit, findTuitById, findAllTuits} from "../services/tuits-service.js";
 import {deleteUsersByUsername, createUser, deleteUser} from "../services/users-service.js";
 global.TextEncoder = require("util").TextEncoder;
