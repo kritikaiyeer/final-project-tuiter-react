@@ -1,3 +1,6 @@
+/**
+    Component of showing the sign up page so that a user can create its account
+*/
 import {useState} from "react";
 import * as service from "../../services/auth-service";
 import {useNavigate} from "react-router-dom";

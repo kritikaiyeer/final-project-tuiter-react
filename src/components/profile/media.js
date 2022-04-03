@@ -1,3 +1,6 @@
+/**
+    Component of showing the media related to the logged in user.
+*/
 const Media = () => {
     return(
         <div>

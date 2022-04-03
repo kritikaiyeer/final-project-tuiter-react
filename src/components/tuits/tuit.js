@@ -1,3 +1,6 @@
+/**
+    Component that renders a tuit
+*/
 import React from "react";
 import TuitStats from "./tuit-stats";
 import TuitImage from "./tuit-image";

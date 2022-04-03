@@ -1,3 +1,7 @@
+/**
+    Component of showing the tuits that the logged in user has tuited
+*/
+
 import {useEffect, useState} from "react";
 import * as service from "../../services/tuits-service";
 import Tuits from "../tuits/index";

@@ -1,3 +1,6 @@
+/**
+    Component of showing an edit profile page to the logged in user so it can change its information.
+*/
 import React from "react";
 import {Link} from "react-router-dom";
 

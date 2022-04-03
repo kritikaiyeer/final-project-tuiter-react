@@ -11,6 +11,10 @@ const api = axios.create({
 export const findAllTuitsLikedByUser = (userId) =>
     api.get(`${USERS_API}/${userId}/likes`)
         .then(response => response.data);
+/**
+ * @file A file that offers various services to communicate with likes and dislikes related
+ * endpoints and resources
+ */
 
 export const findAllUsersThatLikedTuit = (tid) =>
     api.get(`${TUITS_API}/${tid}/likes`)

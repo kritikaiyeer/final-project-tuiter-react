@@ -1,3 +1,7 @@
+/**
+    Component of showing statistics of the various tuits like number of replies, retuits,
+    likes and dislikes
+*/
 import React from "react";
 
 const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {

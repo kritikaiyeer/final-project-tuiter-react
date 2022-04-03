@@ -1,3 +1,7 @@
+/**
+ * @file A file that offers various services to communicate with tuits related
+ * endpoints and resources
+ */
 import axios from "axios";
 
 const TUITS_API = "https://fse-node-app-a4.herokuapp.com/tuits";

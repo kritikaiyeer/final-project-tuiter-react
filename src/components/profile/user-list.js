@@ -1,3 +1,6 @@
+/**
+    Component that renders an array of users.
+*/
 import React from "react";
 import {Link} from "react-router-dom";
 

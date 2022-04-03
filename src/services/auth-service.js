@@ -1,3 +1,7 @@
+/**
+ * @file A file that offers various services to communicate with authentication related
+ * endpoints and resources
+ */
 import axios from "axios";
 const BASE_URL = "https://fse-node-app-a4.herokuapp.com";
 

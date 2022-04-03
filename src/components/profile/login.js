@@ -1,3 +1,6 @@
+/**
+    Component of showing login page to the user so that it can log in
+*/
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
