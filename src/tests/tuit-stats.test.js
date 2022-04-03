@@ -1,3 +1,6 @@
+/**
+    Tests to check the proper rendering of tuit stats upon clicking the like or dislike button
+*/
 import {act, create} from 'react-test-renderer';
 import TuitStats from "../components/tuits/tuit-stats";
 
