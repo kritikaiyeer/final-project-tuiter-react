@@ -35,8 +35,8 @@ const Profile = () => {
           <img className="w-100" src="../images/nasa-profile-header.jpg"/>
           <div className="bottom-0 left-0 position-absolute">
             <div className="position-relative">
-              <img className="position-relative ttr-z-index-1 ttr-top-40px ttr-width-150px"
-                   src="../images/nasa-3.png"/>
+              <img async className="position-relative ttr-z-index-1 ttr-top-120px ttr-width-100px"
+                   src={profile.profilePhoto}/>
             </div>
           </div>
           <Link to="/profile/edit"

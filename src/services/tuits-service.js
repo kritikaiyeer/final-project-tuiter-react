@@ -3,10 +3,9 @@
  * endpoints and resources
  */
 import axios from "axios";
-
-const TUITS_API = "https://fse-node-app-a4.herokuapp.com/tuits";
-const USERS_API = "https://fse-node-app-a4.herokuapp.com/users";
-
+const baseUrl=process.env.REACT_APP_BASE_URL
+const USERS_API = `${baseUrl}/users`;
+const TUITS_API = `${baseUrl}/tuits`;
 const api = axios.create({
    withCredentials: true
 });

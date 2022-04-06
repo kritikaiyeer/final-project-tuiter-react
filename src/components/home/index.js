@@ -5,10 +5,22 @@ import React from "react";
 import Tuits from "../tuits";
 import * as service from "../../services/tuits-service";
 import {useEffect, useState} from "react";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import * as login from "../../services/auth-service";
 
 const Home = () => {
   const location = useLocation();
+const navigate = useNavigate();
+  const [profile, setProfile] = useState({});
+  useEffect(async () => {
+try{
+      const user = await login.profile();
+      setProfile(user);
+  } catch (e) {
+    navigate('/login');
+  }
+
+  }, []);
   const {uid} = useParams();
   const [tuits, setTuits] = useState([]);
   const [tuit, setTuit] = useState('');
@@ -30,8 +42,8 @@ const Home = () => {
         <h4 className="fw-bold p-2">Home Screen</h4>
         <div className="d-flex">
           <div className="p-2">
-            <img className="ttr-width-50px rounded-circle"
-                 src="../images/nasa-logo.jpg"/>
+            <img async className="ttr-width-50px rounded-circle"
+                 src={profile.profilePhoto}/>
           </div>
           <div className="p-2 w-100">
             <textarea
