@@ -17,6 +17,7 @@ import Lists from "../lists";
 import More from "../more";
 import Signup from "../profile/signup";
 import {Login} from "../profile/login";
+import Dashboard from "../admin-dashboard";
 
 function Tuiter () {
   return(
@@ -43,7 +44,7 @@ function Tuiter () {
               <Route path="/profile/*" element={<Profile/>}/>
               <Route path="/profile/edit" element={<EditProfile/>}/>
               <Route path="/more" element={<More/>}/>
-
+              <Route path="/dashboard" element={<Dashboard/>}/>
             </Routes>
           </div>
           <div className="ttr-right-column">
