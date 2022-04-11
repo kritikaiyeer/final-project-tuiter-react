@@ -38,7 +38,6 @@ const Dashboard = () => {
   };
 
   const openDialog = (userid) => {
-    console.log(userid)
     setShowModal(true)
   }
 
