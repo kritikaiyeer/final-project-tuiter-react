@@ -5,7 +5,7 @@
 import React from "react";
 
 const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
-
+const openDialog = () => {}
 
     return (
       <div className="row mt-2">
@@ -44,10 +44,12 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
             <span className="ttr-stats-dislikes">{tuit.stats && tuit.stats.dislikes}</span>
           </span>
         </div>
-        <div className="col">
-          <i className="far fa-inbox-out"></i>
+        <div className="col"> 
+    
+          <i class="fa-light fa-thumbtack" onClick = {() => openDialog }></i>
         </div>
       </div>
     );
 }
 export default TuitStats;
+
