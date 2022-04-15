@@ -21,9 +21,10 @@ const Dashboard = () => {
 
   const [allusers, setAllUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [tuits, setTuits] = useState(false);
-  const [likes, setLikes] = useState(false);
-
+  const [tuits, setTuits] = useState(true);
+  const [likes, setLikes] = useState(true);
+  const [signIn, setsignIn] = useState(true);
+  const [user, setUser] = useState(null);
 
   const handleClose = () => {
     setShowModal(false);
@@ -31,14 +32,43 @@ const Dashboard = () => {
 
   const toggleTuits = () => {
     setTuits((prev) => !prev);
+    if(tuits){
+      revokeAccess(user,"allowTuits")
+    }else{
+      giveAccess(user,"allowTuits")
+    }
   };
 
   const toggleLikes = () => {
     setLikes((prev) => !prev);
+    if(tuits){
+      revokeAccess(user,"allowLikes")
+    }else{
+      giveAccess(user,"allowLikes")
+    }
   };
 
-  const openDialog = (userid) => {
+  const toggleSignIn = () => {
+    setsignIn((prev) => !prev);
+    if(tuits){
+      revokeAccess(user,"allowSignIn")
+    }else{
+      giveAccess(user,"allowSignIn")
+    }
+  };
+
+  const openDialog = (data) => {
+    console.log({data})
+    setUser(data._id)
     setShowModal(true)
+  }
+
+  const revokeAccess = (uid,privilege) => {
+    service.setPrivelageRevokeAccess(uid,privilege)
+  }
+
+  const giveAccess = (uid,privilege) => {
+    service.setPrivelageAccess(uid,privilege)
   }
 
 
@@ -56,7 +86,7 @@ const Dashboard = () => {
           <div className="column">
             {allusers.map((data) => (
               <div className="col-md-4 animated fadeIn" key={data._id}>
-                <a onClick={() => openDialog(data._id)}>
+                <a onClick={() => openDialog(data)}>
                   <div className="card">
                     <div className="card-body">
                       <div className="avatar">
@@ -97,6 +127,10 @@ const Dashboard = () => {
               <FormControlLabel
                 control={<Switch checked={likes} onChange={toggleLikes} />}
                 label="Allow Likes"
+              />
+              <FormControlLabel
+                control={<Switch checked={signIn} onChange={toggleSignIn} />}
+                label="Allow Sign In"
               />
             </FormGroup>
           </DialogContentText>
