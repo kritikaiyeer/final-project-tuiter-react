@@ -10,11 +10,13 @@ import Media from "./media";
 import MyLikes from "./my-likes";
 import MyDislikes from "./my-dislikes";
 import MyBoards from "./my-boards";
+import Dashboard from "../admin-dashboard";
 
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [profile, setProfile] = useState({});
+  console.log(profile); // get user role from here
   useEffect(async () => {
     try {
       const user = await service.profile();
@@ -101,6 +103,12 @@ const Profile = () => {
                     className={`nav-link ${location.pathname.indexOf('/boards') >= 0 ? 'active':''}`}>
                 Boards</Link>
             </li>
+            {profile.role === "ADMIN" ? 
+            <li className="nav-item">
+              <Link to="/profile/dashboard"
+                    className={`nav-link ${location.pathname.indexOf('dashboard') >= 0 ? 'active':''}`}>
+                Admin</Link>
+            </li> : null}
           </ul>
         </div>
       </div>
@@ -111,6 +119,7 @@ const Profile = () => {
           <Route path="/likes" element={<MyLikes/>}/>
           <Route path="/dislikes" element={<MyDislikes/>}/>
           <Route path= "/boards" element={<MyBoards profile={profile}/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
     </div>
   );

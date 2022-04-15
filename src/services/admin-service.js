@@ -4,12 +4,22 @@
  */
  import axios from "axios";
  const baseUrl=process.env.REACT_APP_BASE_URL
- const USERS_API = `${baseUrl}/users`;
+ const USERS_API = `${baseUrl}/api/users`;
  const TUITS_API = `${baseUrl}/tuits`;
  const api = axios.create({
     withCredentials: true
  });
  
  export const findAllUsers = () =>
-     api.get(USERS_API)
+     api.get(`${baseUrl}/users`)
          .then(response => response.data);
+
+export const setPrivelageAccess = (uid,privilege) => {
+    api.put(`${USERS_API}/${uid}/privilegesTrue/${privilege}`)
+        .then(response => response.data)
+}
+
+export const setPrivelageRevokeAccess = (uid,privilege) => {
+    api.put(`${USERS_API}/${uid}/PrivilegesFalse/${privilege}`)
+        .then(response => response.data)
+}
