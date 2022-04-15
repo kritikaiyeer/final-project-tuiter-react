@@ -9,8 +9,8 @@ import TuitsAndReplies from "./tuits-and-replies";
 import Media from "./media";
 import MyLikes from "./my-likes";
 import MyDislikes from "./my-dislikes";
+import MyBoards from "./my-boards";
 import Dashboard from "../admin-dashboard";
-
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -98,6 +98,11 @@ const Profile = () => {
                     className={`nav-link ${location.pathname.indexOf('dislikes') >= 0 ? 'active':''}`}>
                 Dislikes</Link>
             </li>
+            <li className="nav-item">
+              <Link to="/profile/boards"
+                    className={`nav-link ${location.pathname.indexOf('/boards') >= 0 ? 'active':''}`}>
+                Boards</Link>
+            </li>
             {profile.role === "ADMIN" ? 
             <li className="nav-item">
               <Link to="/profile/dashboard"
@@ -113,6 +118,7 @@ const Profile = () => {
           <Route path="/media" element={<Media/>}/>
           <Route path="/likes" element={<MyLikes/>}/>
           <Route path="/dislikes" element={<MyDislikes/>}/>
+          <Route path= "/boards" element={<MyBoards profile={profile}/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
         </Routes>
     </div>
