@@ -16,14 +16,10 @@
  
  const MyBoards = (profile) => {
      const [boards, setBoards] = useState([]);
-     //const [profile, setProfile] = useState({});
-     console.log(profile);
-     console.log(profile.profile._id);
+     
+     // eslint-disable-next-line react-hooks/exhaustive-deps
      useEffect(async () => {
          try {
-           //const user = await service.profile();
-           //console.log(user);
-           //setProfile(user);
            const boards = await findAllBoardsByUser(profile.profile._id);
            setBoards(boards);
          } catch (e) {
@@ -45,7 +41,7 @@
              {
                boards.map(board => {
                  return (
-                   <p onClick={showTuitCarousel(board._id)}> 
+                   <p onClick={() => showTuitCarousel(board._id)}> 
 
                      {board.boardName}
                    </p>
