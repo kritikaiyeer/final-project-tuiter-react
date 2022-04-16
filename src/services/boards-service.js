@@ -17,3 +17,6 @@ export const createBoard = (uid,board) =>
 
 export const addTuitToBoard = (bid,tid, uid) =>
   api.post(`${TUITBOARD_API}/${bid}/tuits/${tid}`, {id: uid}).then((response) => response.data);
+
+export const findAllTuitsFromBoard = (bid) => 
+  api.get(`${TUITBOARD_API}/${bid}/tuits`).then((response) => response.data);

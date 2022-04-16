@@ -2,39 +2,57 @@
  * Component showing boards page of user when they are logged in
  */
  import React, {useState, useEffect} from "react";
- import {findAllBoardsByUser} from "../../services/boards-service";
- import * as service from "../../services/auth-service";
- import DialogActions from "@material-ui/core/DialogActions";
+ import {findAllBoardsByUser, findAllTuitsFromBoard} from "../../services/boards-service";
  import DialogContent from "@material-ui/core/DialogContent";
  import DialogTitle from "@material-ui/core/DialogTitle";
  import DialogContentText from "@material-ui/core/DialogContentText";
  import Dialog from "@material-ui/core/Dialog";
- import Button from "@material-ui/core/Button";
- import Switch from '@material-ui/core/Switch';
- import FormGroup from '@material-ui/core/FormGroup';
- import FormControlLabel from '@material-ui/core/FormControlLabel';
- 
+ import Carousel from "react-multi-carousel";
+  
+ const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+    paritialVisibilityGutter: 60
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    paritialVisibilityGutter: 50
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    paritialVisibilityGutter: 30
+  }
+ };
+
  const MyBoards = (profile) => {
      const [boards, setBoards] = useState([]);
-     
+     const [tuitBoards, setTuitBoards] = useState([]);
      // eslint-disable-next-line react-hooks/exhaustive-deps
      useEffect(async () => {
          try {
            const boards = await findAllBoardsByUser(profile.profile._id);
-           setBoards(boards);
-         } catch (e) {
+           setBoards(boards); 
+          } catch (e) {
          
          }
        }, []);
        
      const [modal, showModal] = useState(false);
-     const [tuitBoards, setTuitBoards] = useState([]);
+     
      const handleClose = () => {
         showModal(false);
       };
 
-     const showTuitCarousel = (bid) => {showModal(true)};
-     console.log(boards);
+     const showTuitCarousel = async(bid) => {
+       const tuitBoards = await findAllTuitsFromBoard(bid);
+       setTuitBoards(tuitBoards);
+       console.log(tuitBoards);
+       showModal(true); 
+    };
+    
      return (
            <div>
            <div>
@@ -52,11 +70,17 @@
            <Dialog open={modal} onClose={handleClose}>
            <DialogTitle>Tuiter Boards</DialogTitle>
            <DialogContent>
-             <DialogContentText>
-               
+             <DialogContentText>   
+                 {tuitBoards.map(tuitBoard => {
+                  return (
+                    <p>
+                        {tuitBoard.tuit.tuit} 
+                    </p>
+                  )
+                  })
+                }            
              </DialogContentText>
-           </DialogContent>
-           
+           </DialogContent>        
          </Dialog>
          </div>
          );
