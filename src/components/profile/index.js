@@ -12,11 +12,12 @@ import MyDislikes from "./my-dislikes";
 import MyBoards from "./my-boards";
 import Dashboard from "../admin-dashboard";
 
+
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [profile, setProfile] = useState({});
-  console.log(profile); // get user role from here
+
   useEffect(async () => {
     try {
       const user = await service.profile();
@@ -29,6 +30,7 @@ const Profile = () => {
     service.logout()
         .then(() => navigate('/login'));
   }
+  
   return(
     <div className="ttr-profile">
       <div className="border border-bottom-0">
@@ -84,11 +86,6 @@ const Profile = () => {
                 Tuits & replies</Link>
             </li>
             <li className="nav-item">
-              <Link to="/profile/media"
-                    className={`nav-link ${location.pathname.indexOf('media') >= 0 ? 'active':''}`}>
-                Media</Link>
-            </li>
-            <li className="nav-item">
               <Link to="/profile/likes"
                     className={`nav-link ${location.pathname.indexOf('/likes') >= 0 ? 'active':''}`}>
                 Likes</Link>
@@ -115,7 +112,6 @@ const Profile = () => {
         <Routes>
           <Route path="/mytuits" element={<MyTuits/>}/>
           <Route path="/tuits-and-replies" element={<TuitsAndReplies/>}/>
-          <Route path="/media" element={<Media/>}/>
           <Route path="/likes" element={<MyLikes/>}/>
           <Route path="/dislikes" element={<MyDislikes/>}/>
           <Route path= "/boards" element={<MyBoards profile={profile}/>}/>
