@@ -49,7 +49,6 @@
      const showTuitCarousel = async(bid) => {
        const tuitBoards = await findAllTuitsFromBoard(bid);
        setTuitBoards(tuitBoards);
-       console.log(tuitBoards);
        showModal(true); 
     };
     
