@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.4",
-    "@material-ui/lab": "^4.0.0-alpha.61",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "dotenv": "^16.0.0",
