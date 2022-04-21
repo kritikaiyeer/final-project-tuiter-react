@@ -34,6 +34,8 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit }) => {
     console.log(response)
     if(response){
       alert("board added")
+      const boards = await service.findAllBoardsByUser(tuit.postedBy._id);
+      setValues(boards);
     } else{
       alert("sorry something went wrong!")
     }
@@ -115,7 +117,7 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit }) => {
               <button onClick={addBoard}>add board</button>;
             </div>
             <FormControl>
-              <InputLabel htmlFor="agent-simple">Agent</InputLabel>
+              <InputLabel htmlFor="agent-simple">Boards</InputLabel>
               <Select
                 value={selected}
                 onChange={handleChange}
