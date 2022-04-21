@@ -17,7 +17,7 @@ try{
       const user = await login.profile();
       setProfile(user);
   } catch (e) {
-    navigate('/login');
+   // navigate('/login');
   }
 
   }, []);

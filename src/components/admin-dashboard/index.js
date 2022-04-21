@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import {getPrivelageAccess} from "../../services/admin-service";
 
 
 const Dashboard = () => {
@@ -25,13 +26,14 @@ const Dashboard = () => {
   const [likes, setLikes] = useState(true);
   const [signIn, setsignIn] = useState(true);
   const [user, setUser] = useState(null);
+  const [access1, setAccess] = useState(null);
 
   const handleClose = () => {
     setShowModal(false);
   };
 
   const toggleTuits = () => {
-    setTuits((prev) => !prev);
+    setTuits(!tuits);
     if(tuits){
       revokeAccess(user,"allowTuits")
     }else{
@@ -40,8 +42,8 @@ const Dashboard = () => {
   };
 
   const toggleLikes = () => {
-    setLikes((prev) => !prev);
-    if(tuits){
+    setLikes(!likes);
+    if(likes){
       revokeAccess(user,"allowLikes")
     }else{
       giveAccess(user,"allowLikes")
@@ -49,8 +51,8 @@ const Dashboard = () => {
   };
 
   const toggleSignIn = () => {
-    setsignIn((prev) => !prev);
-    if(tuits){
+    setsignIn(!signIn);
+    if(signIn){
       revokeAccess(user,"allowSignIn")
     }else{
       giveAccess(user,"allowSignIn")
@@ -58,7 +60,11 @@ const Dashboard = () => {
   };
 
   const openDialog = (data) => {
-    setUser(data._id)
+    setUser(data.user._id)
+    setTuits(data.allowTuits)
+    console.log("Tuits",data.allowTuits)
+    setLikes(data.allowLikes)
+    setsignIn(data.allowSignIn)
     setShowModal(true)
   }
 
@@ -72,8 +78,9 @@ const Dashboard = () => {
 
 
   const findAllUsers = () =>
-    service.findAllUsers("me").then((users) => setAllUsers(users));
+    service.getPrivelageAccess().then((users) => setAllUsers(users));
   useEffect(findAllUsers, []);
+  console.log(findAllUsers)
 
   return (
     <div className="app-card">
@@ -84,22 +91,22 @@ const Dashboard = () => {
         <div className="cards-outer">
           <div className="column">
             {allusers.map((data) => (
-              <div className="col-md-4 animated fadeIn" key={data._id}>
+              <div className="col-md-4 animated fadeIn" key={data.user._id}>
                 <a onClick={() => openDialog(data)}>
                   <div className="card">
                     <div className="card-body">
                       <div className="avatar">
                         <img
-                          src={data.profilePhoto}
+                          src={data.user.profilePhoto}
                           className="card-img-top"
                           alt=""
                         />
                       </div>
-                      <h5 className="card-title">{uppercase(data.userName)}</h5>
+                      <h5 className="card-title">{uppercase(data.user.userName)}</h5>
                       <p className="card-text">
-                        {"ACCOUNT TYPE:" + " " + uppercase(data.accountType)}
+                        {"ACCOUNT TYPE:" + " " + uppercase(data.user.accountType)}
                         <br />
-                        <span className="phone">{data.email}</span>
+                        <span className="phone">{data.user.email}</span>
                       </p>
                     </div>
                   </div>
