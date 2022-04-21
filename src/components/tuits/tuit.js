@@ -5,8 +5,10 @@ import React, {useEffect} from "react";
 import TuitStats from "./tuit-stats";
 import TuitImage from "./tuit-image";
 import TuitVideo from "./tuit-video";
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate, Link, Route, Routes} from "react-router-dom";
 import * as service from "../../services/auth-service";
+import MyTuits from "../profile/my-tuits";
+import ProfileOther from "../profile/profile-other";
 
 const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
     let user=null
@@ -52,14 +54,17 @@ const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
           <i onClick={() => {
               if(user._id===tuit.postedBy._id) {
                   deleteTuit(tuit._id)
+                  window.location. reload(true);
               }
               else {
-                  alert("You can only delete your Tuits.")
+                 // window.location. reload(true);
+                 alert("You can only delete your Tuits.")
 
               }
-              window.location. reload(true);
+
           }} className="fas fa-remove fa-2x fa-pull-right"></i>
-          <Link to={`/tuit/${tuit._id}`}>
+
+          <Link to={`/profile-others`} state={ tuit.postedBy }>
           <i className="float-end fas fa-circle-ellipsis me-1"></i>
           </Link>
         <h2
@@ -78,6 +83,7 @@ const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
         }
         <TuitStats tuit={tuit} likeTuit={likeTuit} dislikeTuit={dislikeTuit} />
       </div>
+
     </li>
   );
 }
