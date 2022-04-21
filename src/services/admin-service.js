@@ -19,6 +19,10 @@ export const setPrivelageAccess = (uid,privilege) => {
         .then(response => response.data)
 }
 
+export const getPrivelageAccess = () =>
+    api.get(`${baseUrl}/api/privileges`)
+        .then(response => response.data)
+
 export const setPrivelageRevokeAccess = (uid,privilege) => {
     api.put(`${USERS_API}/${uid}/PrivilegesFalse/${privilege}`)
         .then(response => response.data)

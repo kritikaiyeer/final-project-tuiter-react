@@ -1,13 +1,20 @@
 /**
     Component that renders a tuit
 */
-import React from "react";
+import React, {useEffect} from "react";
 import TuitStats from "./tuit-stats";
 import TuitImage from "./tuit-image";
 import TuitVideo from "./tuit-video";
 import {useNavigate, Link} from "react-router-dom";
+import * as service from "../../services/auth-service";
 
 const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
+    let user=null
+    useEffect(async () => {
+
+             user = await service.profile();
+
+    }, []);
     const navigate = useNavigate();
     const daysOld = (tuit) => {
         const now = new Date();
@@ -42,7 +49,16 @@ const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
         }
       </div>
       <div className="w-100">
-          <i onClick={() => {deleteTuit(tuit._id)}} className="fas fa-remove fa-2x fa-pull-right"></i>
+          <i onClick={() => {
+              if(user._id===tuit.postedBy._id) {
+                  deleteTuit(tuit._id)
+              }
+              else {
+                  alert("You can only delete your Tuits.")
+
+              }
+              window.location. reload(true);
+          }} className="fas fa-remove fa-2x fa-pull-right"></i>
           <Link to={`/tuit/${tuit._id}`}>
           <i className="float-end fas fa-circle-ellipsis me-1"></i>
           </Link>
@@ -60,7 +76,7 @@ const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
           tuit.image &&
           <TuitImage tuit={tuit}/>
         }
-        <TuitStats tuit={tuit} likeTuit={likeTuit} dislikeTuit={dislikeTuit}/>
+        <TuitStats tuit={tuit} likeTuit={likeTuit} dislikeTuit={dislikeTuit} />
       </div>
     </li>
   );
