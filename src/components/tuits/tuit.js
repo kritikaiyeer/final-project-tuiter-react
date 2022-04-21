@@ -32,17 +32,17 @@ const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
         return old;
     }
   return(
-    // <li onClick={() => navigate(`/tuit/${tuit._id}`)}
     <li className="p-2 ttr-tuit list-group-item d-flex rounded-0">
       <div className="pe-2">
         {
           tuit.postedBy &&
-          <img src={`../images/${tuit.postedBy.userName}.jpg`}
-               className="ttr-tuit-avatar-logo rounded-circle"/>
+          <img async className="ttr-tuit-avatar-logo rounded-circle"
+               src={tuit.postedBy.profilePhoto}/>
+
         }
       </div>
       <div className="w-100">
-          <i onClick={() => deleteTuit(tuit._id)} className="fas fa-remove fa-2x fa-pull-right"></i>
+          <i onClick={() => {deleteTuit(tuit._id)}} className="fas fa-remove fa-2x fa-pull-right"></i>
           <Link to={`/tuit/${tuit._id}`}>
           <i className="float-end fas fa-circle-ellipsis me-1"></i>
           </Link>
