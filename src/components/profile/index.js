@@ -12,7 +12,11 @@ import MyDislikes from "./my-dislikes";
 import MyBoards from "./my-boards";
 import Dashboard from "../admin-dashboard";
 
-
+/**
+ * The below function renders profile
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();

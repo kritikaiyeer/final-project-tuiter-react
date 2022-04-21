@@ -11,8 +11,12 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import * as service from "../../services/boards-service";
+import * as service1 from "../../services/auth-service";
 
-const TuitStats = ({ tuit, likeTuit, dislikeTuit }) => {
+
+
+
+const TuitStats = ({ tuit, likeTuit, dislikeTuit}) => {
   const [showModal, setShowModal] = useState(false);
   const [values, setValues] = useState([]);
   const [selected, setSelected] = useState("");
@@ -21,9 +25,16 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit }) => {
   const handleClose = () => {
     setShowModal(false);
   };
-  const openDialog = () => {
-    setShowModal(true);
-  };
+  const openDialog = async () => {
+    const response = await service1.profile()
+    if (response._id==tuit.postedBy._id) {
+      setShowModal(true);}
+      else{
+      setShowModal(false);
+      alert("You can only add your Tuits to the board.")
+    }
+  }
+  ;
 
   function handleChange(event) {
     setSelected(event.target.value);
@@ -31,7 +42,6 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit }) => {
 
   const addBoard = async () => {
     const response = await service.createBoard(tuit.postedBy._id, newBoard)
-    console.log(response)
     if(response){
       alert("board added")
       const boards = await service.findAllBoardsByUser(tuit.postedBy._id);
@@ -40,6 +50,7 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit }) => {
       alert("sorry something went wrong!")
     }
   };
+
 
   const handleYes = async () => {
     const response = await service.addTuitToBoard(selected,tuit._id, tuit.postedBy._id)
@@ -53,10 +64,11 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit }) => {
 
   useEffect(async () => {
     try {
+
       const boards = await service.findAllBoardsByUser(tuit.postedBy._id);
       setValues(boards);
     } catch (e) {
-    
+
     }
   }, []);
 
@@ -101,10 +113,12 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit }) => {
           </span>
         </div>
         <div className="col">
-          <i class="fa-light fa-thumbtack" onClick={openDialog}></i>
+          {
+            <i class="fa-light fa-thumbtack" onClick={openDialog}></i>
+          }
         </div>
       </div>
-      <Dialog open={showModal} onClose={handleClose}>
+      <Dialog open ={showModal} onClose={handleClose}>
         <DialogTitle>Choose one of the following boards</DialogTitle>
         <DialogContent>
           <DialogContentText>

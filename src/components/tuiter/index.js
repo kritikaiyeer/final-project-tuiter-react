@@ -17,6 +17,9 @@ import Lists from "../lists";
 import More from "../more";
 import Signup from "../profile/signup";
 import {Login} from "../profile/login";
+import ProfileOther from "../profile/profile-other";
+import OtherTuits from "../profile/other-tuits";
+import OtherBoards from "../profile/other-boards";
 
 function Tuiter () {
   return(
@@ -42,6 +45,11 @@ function Tuiter () {
               <Route path="/lists" element={<Lists/>}/>
               <Route path="/profile/*" element={<Profile/>}/>
               <Route path="/profile/edit" element={<EditProfile/>}/>
+              <Route path="/profile-others/mytuits" element={<OtherTuits/>}/>
+              <Route path="/profile-others/boards" element={<OtherBoards/>}/>
+
+                <Route path="/profile-others" element={<ProfileOther/>}/>
+
               <Route path="/more" element={<More/>}/>
             </Routes>
           </div>

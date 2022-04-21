@@ -8,6 +8,9 @@
  import DialogContentText from "@material-ui/core/DialogContentText";
  import Dialog from "@material-ui/core/Dialog";
  import Carousel from "react-multi-carousel";
+import Tuit from "../tuits/tuit";
+import * as likesService from "../../services/likes-service";
+import * as service from "../../services/tuits-service";
   
  const responsive = {
   desktop: {
@@ -26,6 +29,8 @@
     paritialVisibilityGutter: 30
   }
  };
+
+
 
  const MyBoards = (profile) => {
      const [boards, setBoards] = useState([]);
@@ -72,9 +77,8 @@
              <DialogContentText>   
                  {tuitBoards.map(tuitBoard => {
                   return (
-                    <p>
-                        {tuitBoard.tuit.tuit} 
-                    </p>
+
+                   <p> {tuitBoard.tuit.tuit}</p>
                   )
                   })
                 }            
