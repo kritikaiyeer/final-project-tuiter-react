@@ -12,8 +12,7 @@ import Dialog from "@material-ui/core/Dialog";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import * as service from "../../services/boards-service";
 import * as service1 from "../../services/auth-service";
-
-
+import * as privilege from "../../services/admin-service";
 
 
 const TuitStats = ({ tuit, likeTuit, dislikeTuit}) => {
@@ -21,13 +20,15 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit}) => {
   const [values, setValues] = useState([]);
   const [selected, setSelected] = useState("");
   const [newBoard, setNewBoard] = useState("");
+  const [access, setAccess] = useState({});
+
 
   const handleClose = () => {
     setShowModal(false);
   };
   const openDialog = async () => {
     const response = await service1.profile()
-    if (response._id==tuit.postedBy._id) {
+    if (response._id===tuit.postedBy._id) {
       setShowModal(true);}
       else{
       setShowModal(false);
@@ -44,6 +45,8 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit}) => {
     const response = await service.createBoard(tuit.postedBy._id, newBoard)
     if(response){
       alert("board added")
+      const boards = await service.findAllBoardsByUser(tuit.postedBy._id);
+      setValues(boards);
     } else{
       alert("sorry something went wrong!")
     }
@@ -62,14 +65,21 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit}) => {
 
   useEffect(async () => {
     try {
-
       const boards = await service.findAllBoardsByUser(tuit.postedBy._id);
       setValues(boards);
+      const response = await service1.profile()
+      privilege.getPrivelageAccess().then((data) => {
+        data.map(res => {
+          console.log(response._id)
+          if(res.user._id === response._id){
+            setAccess(res);
+          }
+        })
+      });
     } catch (e) {
 
     }
-  }, []);
-
+  }, []);  
   return (
     <div>
       <div className="row mt-2">
@@ -85,6 +95,7 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit}) => {
             {tuit.stats && tuit.stats.retuits}
           </span>
         </div>
+        {access.allowLikes === true ? 
         <div className="col">
           <span className="ttr-like-tuit-click" onClick={() => likeTuit(tuit)}>
             {tuit.stats.likes > 0 && <i className="fa-solid fa-thumbs-up"></i>}
@@ -94,6 +105,15 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit}) => {
             </span>
           </span>
         </div>
+        : <div className="col">
+        <span className="ttr-like-tuit-click">
+          {tuit.stats.likes > 0 && <i class="fa-solid fa-ban"></i>}
+          {tuit.stats.likes <= 0 && <i class="fa-solid fa-ban"></i>}
+          <span className="ttr-stats-likes">
+            {tuit.stats && tuit.stats.likes}
+          </span>
+        </span>
+      </div>}
         <div className="col">
           <span
             className="ttr-dislike-tuit-click"
@@ -129,7 +149,7 @@ const TuitStats = ({ tuit, likeTuit, dislikeTuit}) => {
               <button onClick={addBoard}>add board</button>;
             </div>
             <FormControl>
-              <InputLabel htmlFor="agent-simple">Agent</InputLabel>
+              <InputLabel htmlFor="agent-simple">Boards</InputLabel>
               <Select
                 value={selected}
                 onChange={handleChange}

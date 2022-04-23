@@ -60,6 +60,7 @@ const Dashboard = () => {
   };
 
   const openDialog = (data) => {
+    console.log({data});
     setUser(data.user._id)
     setTuits(data.allowTuits)
     console.log("Tuits",data.allowTuits)
@@ -80,7 +81,6 @@ const Dashboard = () => {
   const findAllUsers = () =>
     service.getPrivelageAccess().then((users) => setAllUsers(users));
   useEffect(findAllUsers, []);
-  console.log(findAllUsers)
 
   return (
     <div className="app-card">

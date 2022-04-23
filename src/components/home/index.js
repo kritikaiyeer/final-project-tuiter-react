@@ -7,20 +7,31 @@ import * as service from "../../services/tuits-service";
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import * as login from "../../services/auth-service";
+import * as privilege from "../../services/admin-service";
 
 const Home = () => {
   const location = useLocation();
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const [profile, setProfile] = useState({});
+  const [access, setAccess] = useState({});
+
   useEffect(async () => {
 try{
       const user = await login.profile();
       setProfile(user);
+      privilege.getPrivelageAccess().then((data) => {
+        data.map(res => {
+          if(res.user._id == user._id){
+            setAccess(res);
+          }
+        })
+      });
+      
   } catch (e) {
    // navigate('/login');
   }
-
   }, []);
+  console.log({access})
   const {uid} = useParams();
   const [tuits, setTuits] = useState([]);
   const [tuit, setTuit] = useState('');
@@ -60,6 +71,7 @@ try{
                 <i className="far fa-calendar me-3"></i>
                 <i className="far fa-map-location me-3"></i>
               </div>
+              { access.allowTuits === true ? 
               <div className="col-2">
                 <a onClick={createTuit}
                    className={`btn btn-primary rounded-pill fa-pull-right
@@ -67,6 +79,11 @@ try{
                   Tuit
                 </a>
               </div>
+              : <div className="col-2">
+              <a>
+                You are banned from tuiting
+              </a>
+            </div>}
             </div>
           </div>
         </div>
